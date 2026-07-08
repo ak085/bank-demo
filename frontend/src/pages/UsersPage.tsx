@@ -6,7 +6,7 @@ import {
 import {
   TeamOutlined, PlusOutlined, KeyOutlined, DeleteOutlined,
 } from '@ant-design/icons'
-import { authHeaders } from '../auth'
+import { authHeaders, getStoredUser } from '../auth'
 
 const { Title, Text } = Typography
 
@@ -27,6 +27,7 @@ interface AddFormValues {
 }
 
 const UsersPage: React.FC = () => {
+  const currentUser = getStoredUser()
   const [users,    setUsers   ] = useState<User[]>([])
   const [loading,  setLoading ] = useState(false)
   const [addForm]               = Form.useForm<AddFormValues>()
@@ -138,7 +139,7 @@ const UsersPage: React.FC = () => {
         <Switch
           size="small"
           checked={v}
-          disabled={u.username === 'admin'}
+          disabled={u.username === currentUser?.username}
           onChange={(en) => toggleEnabled(u.id, en)}
         />
       ),
@@ -164,11 +165,11 @@ const UsersPage: React.FC = () => {
             description="This action cannot be undone."
             onConfirm={() => deleteUser(u.id, u.username)}
             okText="Delete" cancelText="Cancel" okType="danger"
-            disabled={u.username === 'admin'}
+            disabled={u.username === currentUser?.username}
           >
             <Button
               size="small" danger icon={<DeleteOutlined />}
-              disabled={u.username === 'admin'}
+              disabled={u.username === currentUser?.username}
             >
               Delete
             </Button>
@@ -210,7 +211,7 @@ const UsersPage: React.FC = () => {
               loading={loading}
             />
             <Text type="secondary" style={{ fontSize: 11, marginTop: 10, display: 'block' }}>
-              The <code>admin</code> account cannot be deleted or disabled.
+              You cannot delete or disable your own account.
               Viewer accounts can access all equipment pages but not this Users page.
             </Text>
           </Card>
