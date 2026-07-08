@@ -12,11 +12,15 @@ import {
   SunOutlined,
   TeamOutlined,
   LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons'
 import { useStore } from './stores'
 import { overallHealth } from './types/fdd'
 import { getStoredUser, clearAuth } from './auth'
 import type { AuthUser } from './auth'
+import { expiryTag } from './utils/expiry'
 import LandingPage  from './pages/LandingPage'
 import VRVPage      from './pages/VRVPage'
 import LightingPage from './pages/LightingPage'
@@ -64,6 +68,7 @@ const AppShell = observer(() => {
   const { user, onLogout } = useAuth()
   const { vrv, lighting, btu } = store
   const [collapsed, setCollapsed] = useState(false)
+  const pwExpiry = expiryTag(user.passwordExpiresAt)
 
   const vrvH = overallHealth(vrv.allFindings)
   const ltH  = overallHealth(lighting.allFindings)
@@ -123,6 +128,7 @@ const AppShell = observer(() => {
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
+        trigger={null}
         theme="dark"
         style={{
           overflow: 'auto', height: '100vh',
@@ -133,17 +139,29 @@ const AppShell = observer(() => {
         {/* Brand */}
         <div style={{
           height: 56, background: '#a80000',
-          display: 'flex', alignItems: 'center', padding: '0 18px', gap: 10,
+          display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start',
+          padding: collapsed ? 0 : '0 18px', gap: 10,
           overflow: 'hidden', flexShrink: 0,
         }}>
-          <span style={{ color: '#fff', fontWeight: 900, fontSize: 20, letterSpacing: 1, flexShrink: 0 }}>
-            BANK
-          </span>
           {!collapsed && (
-            <span style={{ color: 'rgba(255,255,255,0.80)', fontSize: 11, lineHeight: 1.35 }}>
-              Building<br />Intelligence
-            </span>
+            <>
+              <span style={{ color: '#fff', fontWeight: 900, fontSize: 20, letterSpacing: 1, flexShrink: 0 }}>
+                BANK
+              </span>
+              <span style={{ color: 'rgba(255,255,255,0.80)', fontSize: 11, lineHeight: 1.35, flex: 1 }}>
+                Building<br />Intelligence
+              </span>
+            </>
           )}
+          <Button
+            type="text" size="small"
+            icon={collapsed
+              ? <MenuUnfoldOutlined style={{ color: 'rgba(255,255,255,0.75)', fontSize: 15 }} />
+              : <MenuFoldOutlined   style={{ color: 'rgba(255,255,255,0.75)', fontSize: 15 }} />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{ padding: '2px 6px', flexShrink: 0 }}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          />
         </div>
 
         {/* Nav */}
@@ -161,7 +179,6 @@ const AppShell = observer(() => {
           padding: collapsed ? '12px 0' : '12px 16px',
           borderTop: '1px solid rgba(255,255,255,0.10)',
           flexShrink: 0,
-          marginBottom: 48,
         }}>
           {/* Dark / light toggle */}
           <div style={{
@@ -237,6 +254,16 @@ const AppShell = observer(() => {
                   Signed in as{' '}
                   <strong style={{ color: 'rgba(255,255,255,0.65)' }}>{user.displayName}</strong>
                 </div>
+                {pwExpiry && (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 5, marginBottom: 6,
+                    fontSize: 11,
+                    color: pwExpiry.color === 'red' ? '#ff4d4f' : pwExpiry.color === 'orange' ? '#faad14' : 'rgba(255,255,255,0.40)',
+                  }}>
+                    <ClockCircleOutlined style={{ fontSize: 11 }} />
+                    {pwExpiry.text}
+                  </div>
+                )}
                 <Button
                   type="text"
                   size="small"
@@ -263,7 +290,7 @@ const AppShell = observer(() => {
                 type="text" size="small"
                 icon={<LogoutOutlined style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14 }} />}
                 onClick={onLogout}
-                title={`Sign out (${user.displayName})`}
+                title={`Sign out (${user.displayName})${pwExpiry ? ` — ${pwExpiry.text}` : ''}`}
                 style={{ padding: '2px 6px' }}
               />
             </div>

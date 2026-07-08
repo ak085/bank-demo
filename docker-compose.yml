@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile
     container_name: bank-demo-backend
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Singapore
     volumes:
       - ./data:/data
     networks:
