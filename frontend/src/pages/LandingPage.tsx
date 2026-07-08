@@ -6,6 +6,8 @@ import { ThunderboltOutlined, BulbOutlined, AreaChartOutlined,
   CheckCircleOutlined, ExclamationCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { useStore } from '../stores'
 import { overallHealth } from '../types/fdd'
+import PageHeroImage from '../components/PageHeroImage'
+import heroImg from '../assets/hero/bank_branches_dashboard_landing_page.jpg'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -73,7 +75,7 @@ const LandingPage: React.FC = observer(() => {
   return (
     <div style={{ padding: '36px 32px', maxWidth: 1100, margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ marginBottom: 36, textAlign: 'center' }}>
+      <div style={{ marginBottom: 16, textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginBottom: 10 }}>
           <Tag color="red" style={{ fontSize: 11, letterSpacing: 1 }}>
             DEMO — Bank Building Intelligence Platform
@@ -83,6 +85,17 @@ const LandingPage: React.FC = observer(() => {
         <Paragraph type="secondary" style={{ fontSize: 15 }}>
           Fault Detection & Diagnostics across three building systems. Select a system to review live findings.
         </Paragraph>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 36 }}>
+        <div style={{ width: '100%', maxWidth: 980 }}>
+          <PageHeroImage
+            src={heroImg}
+            alt="Bank branch building intelligence — HVAC, lighting, and BTU metering overview"
+            caption="Bank Building Intelligence — branch network overview"
+            size="large"
+          />
+        </div>
       </div>
 
       {/* Tiles */}

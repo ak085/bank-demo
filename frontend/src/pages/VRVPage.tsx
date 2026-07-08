@@ -3,19 +3,22 @@ import { observer } from 'mobx-react-lite'
 import {
   Card, Row, Col, Table, Tag, Statistic, Typography, Divider, Badge,
   Tabs, Slider, Select, Switch, Radio, Button, message, Space,
-  Form, Input, List, Avatar, Segmented, InputNumber,
+  Form, Input, List, Avatar, Segmented, InputNumber, Progress,
 } from 'antd'
 import {
   ThunderboltOutlined,
   CheckCircleOutlined, ExclamationCircleOutlined, CloseCircleOutlined,
   AppstoreOutlined, ControlOutlined, BellOutlined, SettingOutlined,
   MailOutlined, PhoneOutlined, UserOutlined, RobotOutlined, DeleteOutlined,
-  TableOutlined, LineChartOutlined,
+  TableOutlined, LineChartOutlined, ClusterOutlined,
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
+import PageHeroImage from '../components/PageHeroImage'
 import type { VRVUnit } from '../stores/VRVStore'
+import heroImg from '../assets/hero/bank_vrv_optimization_page.jpg'
+import schematicImg from '../assets/hero/vrv_schematic.jpg'
 
 const { Title, Text } = Typography
 
@@ -495,30 +498,65 @@ const VRVPage: React.FC = observer(() => {
   // ── Overview tab ──────────────────────────────────────────────────────────
   const overviewContent = (
     <>
-      <Row gutter={12} style={{ marginBottom: 16 }}>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Units Running" value={vrv.unitsRunning} suffix={`/ ${vrv.units.length}`} />
-          </Card>
+      <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+        <Col xs={24} lg={14}>
+          <PageHeroImage
+            src={heroImg}
+            alt="VRV indoor units networked to outdoor condenser and cloud monitoring"
+            caption="VRV network — room units, gateway, and outdoor condenser"
+          />
         </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Avg Room Temp" value={vrv.avgRoomTemp} suffix="°C" precision={1}
-              valueStyle={{ color: vrv.avgRoomTemp > 25 ? '#d48806' : '#389e0d' }} />
-          </Card>
-        </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Active Faults" value={vrv.unitsCritical}
-              valueStyle={{ color: vrv.unitsCritical > 0 ? '#cf1322' : '#389e0d' }}
-              prefix={vrv.unitsCritical > 0 ? <CloseCircleOutlined /> : <CheckCircleOutlined />} />
-          </Card>
-        </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Filter Alerts" value={vrv.units.filter(u => u.filterSign).length}
-              valueStyle={{ color: vrv.units.some(u => u.filterSign) ? '#d48806' : '#389e0d' }} />
-          </Card>
+        <Col xs={24} lg={10}>
+          <Row gutter={[12, 12]}>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fff2e8', border: '1px solid #ffd8bf' }}>
+                <Progress
+                  type="dashboard" size={88}
+                  percent={Math.round(Math.min(100, Math.max(0, ((vrv.avgRoomTemp - 18) / (30 - 18)) * 100)))}
+                  strokeColor={vrv.avgRoomTemp > 25 ? '#d48806' : '#389e0d'}
+                  format={() => <span style={{ fontSize: 15 }}>{vrv.avgRoomTemp.toFixed(1)}°C</span>}
+                />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Avg Room Temp</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fff2e8', border: '1px solid #ffd8bf' }}>
+                <Progress
+                  type="dashboard" size={88}
+                  percent={Math.round((vrv.unitsRunning / vrv.units.length) * 100)}
+                  strokeColor="#d4380d"
+                  format={() => <span style={{ fontSize: 15 }}>{vrv.unitsRunning}/{vrv.units.length}</span>}
+                />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Units Running</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fff2e8', border: '1px solid #ffd8bf' }}>
+                <Statistic title="Active Faults" value={vrv.unitsCritical}
+                  valueStyle={{ color: vrv.unitsCritical > 0 ? '#cf1322' : '#389e0d' }}
+                  prefix={vrv.unitsCritical > 0 ? <CloseCircleOutlined /> : <CheckCircleOutlined />} />
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fff2e8', border: '1px solid #ffd8bf' }}>
+                <Statistic title="Filter Alerts" value={vrv.units.filter(u => u.filterSign).length}
+                  valueStyle={{ color: vrv.units.some(u => u.filterSign) ? '#d48806' : '#389e0d' }} />
+              </Card>
+            </Col>
+            <Col span={24}>
+              <Card size="small" style={{ background: '#fff2e8', border: '1px solid #ffd8bf' }}
+                styles={{ body: { padding: '10px 16px' } }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#888', marginBottom: 4 }}>
+                  <span>Energy Saved Today (vs baseline)</span>
+                  <span>{vrv.totalKwhSaved} kWh</span>
+                </div>
+                <Progress
+                  percent={vrv.totalKwhBaseline > 0 ? Math.round((vrv.totalKwhSaved / vrv.totalKwhBaseline) * 100) : 0}
+                  strokeColor="#d4380d" size="small"
+                />
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
 
@@ -706,6 +744,20 @@ const VRVPage: React.FC = observer(() => {
     </>
   )
 
+  // ── Schematic Diagram tab ─────────────────────────────────────────────────
+  const schematicContent = (
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: 1100 }}>
+        <PageHeroImage
+          src={schematicImg}
+          alt="AiHVAC cloud data-sharing architecture — edge device, connectivity, and cloud modules"
+          caption="Data flow: VRV units → OEM communication module → Univers Edge Device → 4G LTE/MQTT → AiHVAC Cloud (Console, Dashboard, AiAgents, Optimization Module). Setpoint overrides flow back down the same path."
+          size="large"
+        />
+      </div>
+    </div>
+  )
+
   const tabLabel = (icon: React.ReactNode, text: string, count?: number) => (
     <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
       {icon}
@@ -727,6 +779,7 @@ const VRVPage: React.FC = observer(() => {
     { key: 'fdd',      label: tabLabel(<BellOutlined />, 'Alarms & FDD', critWarnCount),     children: fddContent },
     { key: 'points',   label: tabLabel(<TableOutlined />, 'Point List'),                     children: <VRVPointsTab /> },
     { key: 'energy',   label: tabLabel(<LineChartOutlined />, 'Energy'),                     children: <VRVEnergyTab /> },
+    { key: 'schematic', label: tabLabel(<ClusterOutlined />, 'Schematic Diagram'),           children: schematicContent },
     { key: 'settings', label: tabLabel(<SettingOutlined />, 'Settings'),                     children: <SettingsTab findingsCount={vrv.allFindings.length} /> },
   ]
 

@@ -14,7 +14,9 @@ import {
 import ReactECharts from 'echarts-for-react'
 import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
+import PageHeroImage from '../components/PageHeroImage'
 import type { Branch } from '../stores/BTUStore'
+import heroImg from '../assets/hero/bank_btu_chw_metering_page.jpg'
 
 const { Title, Text } = Typography
 
@@ -364,40 +366,54 @@ const BTUPage: React.FC = observer(() => {
   // ── Overview tab ──────────────────────────────────────────────────────────
   const overviewContent = (
     <>
-      <Row gutter={12} style={{ marginBottom: 16 }}>
-        <Col span={5}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Total Demand" value={btu.totalBtuKw} suffix="kW" precision={1}
-              valueStyle={{ color: '#096dd9' }} />
-          </Card>
+      <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+        <Col xs={24} lg={14}>
+          <PageHeroImage
+            src={heroImg}
+            alt="Chilled water plant BTU metering distribution across bank branches"
+            caption="Chilled water plant — BTU metering distribution to branches"
+          />
         </Col>
-        <Col span={5}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Avg ΔT" value={btu.avgDeltaT} suffix="°C" precision={1}
-              valueStyle={{ color: deltaTColor(btu.avgDeltaT) }} />
-            <div style={{ fontSize: 11, color: '#999' }}>Target ≥ 5°C</div>
-          </Card>
-        </Col>
-        <Col span={5}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Low ΔT Branches" value={btu.lowDeltaTCount}
-              suffix={`/ ${btu.branches.length}`}
-              valueStyle={{ color: btu.lowDeltaTCount > 0 ? '#cf1322' : '#389e0d' }} />
-          </Card>
-        </Col>
-        <Col span={5}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Total MTD Bill" prefix="SGD" value={btu.totalMtdSgd} precision={0} />
-            <div style={{ fontSize: 11, color: '#999' }}>Day {dayOfMonth} of {daysInMonth}</div>
-          </Card>
-        </Col>
-        <Col span={4}>
-          <Card size="small" style={{ textAlign: 'center', padding: '4px 0' }}>
-            <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>Billing Cycle</div>
-            <Progress type="circle" percent={monthProgress} size={64}
-              strokeColor={monthProgress > 75 ? '#d48806' : '#1677ff'}
-              format={p => <span style={{ fontSize: 13, fontWeight: 600 }}>{p}%</span>} />
-          </Card>
+        <Col xs={24} lg={10}>
+          <Row gutter={[12, 12]}>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#e6f4ff', border: '1px solid #bae0ff' }}>
+                <Progress
+                  type="dashboard" size={88}
+                  percent={Math.round(Math.min(100, Math.max(0, ((btu.avgDeltaT - 2) / (8 - 2)) * 100)))}
+                  strokeColor={deltaTColor(btu.avgDeltaT)}
+                  format={() => <span style={{ fontSize: 15 }}>{btu.avgDeltaT.toFixed(1)}°C</span>}
+                />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Avg ΔT (target ≥5°C)</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#e6f4ff', border: '1px solid #bae0ff' }}>
+                <Progress type="dashboard" size={88} percent={monthProgress}
+                  strokeColor={monthProgress > 75 ? '#d48806' : '#1677ff'}
+                  format={p => <span style={{ fontSize: 15 }}>{p}%</span>} />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Billing Cycle — Day {dayOfMonth}/{daysInMonth}</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#e6f4ff', border: '1px solid #bae0ff' }}>
+                <Statistic title="Total Demand" value={btu.totalBtuKw} suffix="kW" precision={1}
+                  valueStyle={{ color: '#096dd9' }} />
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#e6f4ff', border: '1px solid #bae0ff' }}>
+                <Statistic title="Low ΔT Branches" value={btu.lowDeltaTCount}
+                  suffix={`/ ${btu.branches.length}`}
+                  valueStyle={{ color: btu.lowDeltaTCount > 0 ? '#cf1322' : '#389e0d' }} />
+              </Card>
+            </Col>
+            <Col span={24}>
+              <Card size="small" style={{ textAlign: 'center', background: '#e6f4ff', border: '1px solid #bae0ff' }}>
+                <Statistic title="Total MTD Bill" prefix="SGD" value={btu.totalMtdSgd} precision={0} />
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
 

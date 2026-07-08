@@ -14,7 +14,9 @@ import {
 import ReactECharts from 'echarts-for-react'
 import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
+import PageHeroImage from '../components/PageHeroImage'
 import type { LightingZone } from '../stores/LightingStore'
+import heroImg from '../assets/hero/bank_lighting_control_page.jpg'
 
 const { Title, Text } = Typography
 
@@ -565,32 +567,66 @@ const LightingPage: React.FC = observer(() => {
   // ── Overview tab ──────────────────────────────────────────────────────────
   const overviewContent = (
     <>
-      <Row gutter={12} style={{ marginBottom: 16 }}>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Total Power" value={lighting.totalPowerKw} suffix="kW" precision={2}
-              valueStyle={{ color: '#d48806' }} />
-            <div style={{ fontSize: 11, color: '#999' }}>Target: {lighting.totalExpectedKw.toFixed(2)} kW</div>
-          </Card>
+      <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+        <Col xs={24} lg={14}>
+          <PageHeroImage
+            src={heroImg}
+            alt="Networked lighting sensors and dimming control across a bank branch"
+            caption="Lighting mesh — sensors, dimming gateway, and schedule control"
+          />
         </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Saved Today" value={lighting.totalSavedKwh} suffix="kWh" precision={1}
-              valueStyle={{ color: '#389e0d' }} />
-            <div style={{ fontSize: 11, color: '#999' }}>SGD {lighting.savingsSgd.toFixed(2)} @ $0.26/kWh</div>
-          </Card>
-        </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Active Zones" value={lighting.activeZones} suffix={`/ ${lighting.zones.length}`} />
-          </Card>
-        </Col>
-        <Col span={6}>
-          <Card size="small" style={{ textAlign: 'center' }}>
-            <Statistic title="Active Findings"
-              value={lighting.allFindings.filter(f => f.severity !== 'info').length}
-              valueStyle={{ color: lighting.allFindings.some(f => f.severity !== 'info') ? '#d48806' : '#389e0d' }} />
-          </Card>
+        <Col xs={24} lg={10}>
+          <Row gutter={[12, 12]}>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fffbe6', border: '1px solid #fff1b8' }}>
+                <Progress
+                  type="dashboard" size={88}
+                  percent={lighting.totalExpectedKw > 0 ? Math.round(Math.min(100, (lighting.totalPowerKw / lighting.totalExpectedKw) * 100)) : 0}
+                  strokeColor="#d48806"
+                  format={() => <span style={{ fontSize: 14 }}>{lighting.totalPowerKw.toFixed(2)}kW</span>}
+                />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Power vs Target ({lighting.totalExpectedKw.toFixed(2)} kW)</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fffbe6', border: '1px solid #fff1b8' }}>
+                <Progress
+                  type="dashboard" size={88}
+                  percent={Math.round((lighting.activeZones / lighting.zones.length) * 100)}
+                  strokeColor="#d48806"
+                  format={() => <span style={{ fontSize: 15 }}>{lighting.activeZones}/{lighting.zones.length}</span>}
+                />
+                <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>Active Zones</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fffbe6', border: '1px solid #fff1b8' }}>
+                <Statistic title="Saved Today" value={lighting.totalSavedKwh} suffix="kWh" precision={1}
+                  valueStyle={{ color: '#389e0d' }} />
+                <div style={{ fontSize: 11, color: '#999' }}>SGD {lighting.savingsSgd.toFixed(2)} @ $0.26/kWh</div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card size="small" style={{ textAlign: 'center', background: '#fffbe6', border: '1px solid #fff1b8' }}>
+                <Statistic title="Active Findings"
+                  value={lighting.allFindings.filter(f => f.severity !== 'info').length}
+                  valueStyle={{ color: lighting.allFindings.some(f => f.severity !== 'info') ? '#d48806' : '#389e0d' }} />
+              </Card>
+            </Col>
+            <Col span={24}>
+              <Card size="small" style={{ background: '#fffbe6', border: '1px solid #fff1b8' }}
+                styles={{ body: { padding: '10px 16px' } }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#888', marginBottom: 4 }}>
+                  <span>Lifetime Savings (24h window)</span>
+                  <span>{lighting.ltSavedKwh} kWh</span>
+                </div>
+                <Progress
+                  percent={lighting.ltBaselineKwh > 0 ? Math.round((lighting.ltSavedKwh / lighting.ltBaselineKwh) * 100) : 0}
+                  strokeColor="#d48806" size="small"
+                />
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
 
