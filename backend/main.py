@@ -194,9 +194,9 @@ def delete_user(user_id: int, admin=Depends(require_admin)):
     if not row:
         conn.close()
         raise HTTPException(status_code=404, detail="User not found")
-    if row["username"] == "admin":
+    if row["username"] == admin["username"]:
         conn.close()
-        raise HTTPException(status_code=400, detail="Cannot delete the built-in admin account")
+        raise HTTPException(status_code=400, detail="Cannot delete your own account")
     conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
     conn.commit()
     conn.close()
