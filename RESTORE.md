@@ -38,6 +38,20 @@ docker compose up -d --build
 # Log in with admin credentials to access VRV / Lighting / BTU pages
 ```
 
+## Off-site backup: GitHub
+
+In addition to Gitea (source of truth), this repo also pushes to a private GitHub
+mirror for off-site backup: `git@github.com-bank-demo:ak085/bank-demo.git` (branch
+`main`), via a dedicated SSH deploy key — same one-key-per-repo pattern documented in
+`heathrow-demo/DEPLOY_KEYS.md`.
+
+- Deploy key: `~/.ssh/bank-demo-deploy` (on CT 106)
+- SSH config alias: `github.com-bank-demo`
+- Git remote name: `github` (alongside `origin` = Gitea)
+- After committing, push both: `git push origin main && git push github main`
+- This is a backup mirror, not a second dev environment — don't clone/edit from GitHub;
+  Gitea stays the source of truth.
+
 ## Notes
 
 - Binds to `0.0.0.0:8029` — accessible on all interfaces (LAN + Tailscale)
