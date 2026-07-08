@@ -49,7 +49,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             marginBottom: 18,
           }}>
             <span style={{ color: '#fff', fontWeight: 900, fontSize: 22, letterSpacing: 1 }}>
-              DBS
+              BANK
             </span>
             <span style={{ color: 'rgba(255,255,255,0.82)', fontSize: 12, lineHeight: 1.35 }}>
               Building<br />Intelligence

@@ -26,8 +26,8 @@ function HealthTag({ health }: { health: 'ok' | 'warning' | 'critical' }) {
 
 function SettingsTab({ findingsCount }: { findingsCount: number }) {
   const [contacts, setContacts] = useState([
-    { key: '1', name: 'Facilities Manager', email: 'facilities@dbs.com.sg', phone: '+65 9111 2345', severity: 'warning', enabled: true },
-    { key: '2', name: 'Energy Manager', email: 'energy@dbs.com.sg', phone: '+65 8333 4567', severity: 'info', enabled: false },
+    { key: '1', name: 'Facilities Manager', email: 'facilities@bank-demo.local', phone: '+65 9111 2345', severity: 'warning', enabled: true },
+    { key: '2', name: 'Energy Manager', email: 'energy@bank-demo.local', phone: '+65 8333 4567', severity: 'info', enabled: false },
   ])
   const [form] = Form.useForm()
 
@@ -85,7 +85,7 @@ function SettingsTab({ findingsCount }: { findingsCount: number }) {
             ]}
           />
           <Text type="secondary" style={{ fontSize: 11, marginTop: 8, display: 'block' }}>
-            Schedule source: DBS AMK ROI spec — 100% (08–12h) · 30% (12–17h) · 35% (17–23h) · 40% (night 24-hr areas).
+            Schedule source: Branch ROI spec — 100% (08–12h) · 30% (12–17h) · 35% (17–23h) · 40% (night 24-hr areas).
             Rate: SGD 0.26/kWh.
           </Text>
         </Card>
@@ -126,7 +126,7 @@ function SettingsTab({ findingsCount }: { findingsCount: number }) {
               <Input placeholder="Full name" />
             </Form.Item>
             <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
-              <Input placeholder="name@dbs.com.sg" />
+              <Input placeholder="name@bank-demo.local" />
             </Form.Item>
             <Form.Item name="phone" label="Phone">
               <Input placeholder="+65 9XXX XXXX" />

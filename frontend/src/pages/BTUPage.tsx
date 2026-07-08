@@ -37,8 +37,8 @@ function deviationColor(pct: number) {
 
 function SettingsTab({ findingsCount }: { findingsCount: number }) {
   const [contacts, setContacts] = useState([
-    { key: '1', name: 'Facilities Manager', email: 'facilities@dbs.com.sg', phone: '+65 9111 2345', severity: 'warning', enabled: true },
-    { key: '2', name: 'Finance / Cost Controller', email: 'finance@dbs.com.sg', phone: '+65 8444 5678', severity: 'warning', enabled: true },
+    { key: '1', name: 'Facilities Manager', email: 'facilities@bank-demo.local', phone: '+65 9111 2345', severity: 'warning', enabled: true },
+    { key: '2', name: 'Finance / Cost Controller', email: 'finance@bank-demo.local', phone: '+65 8444 5678', severity: 'warning', enabled: true },
   ])
   const [form] = Form.useForm()
 
@@ -138,7 +138,7 @@ function SettingsTab({ findingsCount }: { findingsCount: number }) {
               <Input placeholder="Full name" />
             </Form.Item>
             <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
-              <Input placeholder="name@dbs.com.sg" />
+              <Input placeholder="name@bank-demo.local" />
             </Form.Item>
             <Form.Item name="phone" label="Phone">
               <Input placeholder="+65 9XXX XXXX" />
@@ -167,7 +167,7 @@ interface PointRow {
 
 const BTUPointsTab = observer(function BTUPointsTab() {
   const { btu } = useStore()
-  const [selId, setSelId] = useState('br-amk')
+  const [selId, setSelId] = useState('br-1')
   const b = btu.branches.find(x => x.id === selId) ?? btu.branches[0]
   const health = btu.branchHealth(b)
 
@@ -225,7 +225,7 @@ const BTUPointsTab = observer(function BTUPointsTab() {
           options={btu.branches.map(x => ({
             label: (
               <span>
-                {x.name.replace('DBS ', '')}
+                {x.name}
                 {btu.branchHealth(x) === 'critical' && <span style={{ color: '#cf1322', marginLeft: 3 }}>●</span>}
                 {btu.branchHealth(x) === 'warning'  && <span style={{ color: '#d48806', marginLeft: 3 }}>●</span>}
               </span>
@@ -277,7 +277,7 @@ const BTUPage: React.FC = observer(() => {
     xAxis: { type: 'value' as const, name: 'ΔT (°C)', min: 0, max: 8 },
     yAxis: {
       type: 'category' as const,
-      data: btu.branches.map(b => b.name.replace('DBS ', '')),
+      data: btu.branches.map(b => b.name),
       axisLabel: { fontSize: 11 },
     },
     series: [{
@@ -305,7 +305,7 @@ const BTUPage: React.FC = observer(() => {
     xAxis: { type: 'value' as const, name: 'MTD Deviation (%)', min: -20, max: 35 },
     yAxis: {
       type: 'category' as const,
-      data: btu.branches.map(b => b.name.replace('DBS ', '')),
+      data: btu.branches.map(b => b.name),
       axisLabel: { fontSize: 11 },
     },
     series: [{
@@ -651,7 +651,7 @@ const BTUPage: React.FC = observer(() => {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
         <AreaChartOutlined style={{ fontSize: 20, color: '#096dd9' }} />
-        <Title level={3} style={{ margin: 0 }}>BTU Metering — DBS Branches</Title>
+        <Title level={3} style={{ margin: 0 }}>BTU Metering — Branches</Title>
         {overallHealth === 'critical' && <Badge count="FAULT" color="#cf1322" />}
         {overallHealth === 'warning'  && <Badge count="WARNING" color="#d48806" />}
         {overallHealth === 'ok'       && <Badge count="All OK" color="#52c41a" />}

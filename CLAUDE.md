@@ -1,6 +1,6 @@
 # dbs-demo — AI Building Intelligence Demo
 
-Dashboard demo for DBS Bank. Three pages showing AI optimisation for VRV, Lighting, and BTU meters.
+Generic bank building demo. Three pages showing AI optimisation for VRV, Lighting, and BTU meters, framed around a fictional bank's branches (no real bank branding).
 
 ## Stack
 
@@ -14,7 +14,7 @@ Dashboard demo for DBS Bank. Three pages showing AI optimisation for VRV, Lighti
 | Build | Webpack 5 |
 | Server | nginx (static SPA) |
 
-**Important:** This project intentionally uses Ant Design — it is a DBS demo targeting integration into the company's existing platform which uses Ant Design. Do **not** replace Ant Design with Tremor or Next.js.
+**Important:** This project intentionally uses Ant Design — it is a bank demo targeting integration into a prospective client's existing platform, which typically uses Ant Design for internal tooling. Do **not** replace Ant Design with Tremor or Next.js.
 
 ## Ports
 

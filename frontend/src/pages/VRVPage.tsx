@@ -39,8 +39,8 @@ const FAN_OPTIONS = [
 // ─── Settings tab (notification contacts + AI agent + algorithm ref) ───────
 function SettingsTab({ findingsCount }: { findingsCount: number }) {
   const [contacts, setContacts] = useState([
-    { key: '1', name: 'Facilities Manager', email: 'facilities@dbs.com.sg', phone: '+65 9111 2345', severity: 'critical', enabled: true },
-    { key: '2', name: 'M&E Engineer', email: 'me-team@dbs.com.sg', phone: '+65 8222 3456', severity: 'warning', enabled: true },
+    { key: '1', name: 'Facilities Manager', email: 'facilities@bank-demo.local', phone: '+65 9111 2345', severity: 'critical', enabled: true },
+    { key: '2', name: 'M&E Engineer', email: 'me-team@bank-demo.local', phone: '+65 8222 3456', severity: 'warning', enabled: true },
   ])
   const [form] = Form.useForm()
 
@@ -103,7 +103,7 @@ function SettingsTab({ findingsCount }: { findingsCount: number }) {
           />
           <Text type="secondary" style={{ fontSize: 11, marginTop: 8, display: 'block' }}>
             Data source: Daikin Modbus card registers. Cycle: 5 s. All thresholds follow Daikin BMS
-            integration guidelines and DBS AMK HVAC commissioning spec.
+            integration guidelines and the branch HVAC commissioning spec.
           </Text>
         </Card>
       </Col>
@@ -144,7 +144,7 @@ function SettingsTab({ findingsCount }: { findingsCount: number }) {
               <Input placeholder="Full name" />
             </Form.Item>
             <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
-              <Input placeholder="name@dbs.com.sg" />
+              <Input placeholder="name@bank-demo.local" />
             </Form.Item>
             <Form.Item name="phone" label="Phone">
               <Input placeholder="+65 9XXX XXXX" />

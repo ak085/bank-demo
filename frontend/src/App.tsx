@@ -137,7 +137,7 @@ const AppShell = observer(() => {
           overflow: 'hidden', flexShrink: 0,
         }}>
           <span style={{ color: '#fff', fontWeight: 900, fontSize: 20, letterSpacing: 1, flexShrink: 0 }}>
-            DBS
+            BANK
           </span>
           {!collapsed && (
             <span style={{ color: 'rgba(255,255,255,0.80)', fontSize: 11, lineHeight: 1.35 }}>

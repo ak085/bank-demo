@@ -4,8 +4,8 @@ export interface AuthUser {
   displayName: string
 }
 
-const TOKEN_KEY = 'dbs_auth_token'
-const USER_KEY  = 'dbs_auth_user'
+const TOKEN_KEY = 'bank_auth_token'
+const USER_KEY  = 'bank_auth_user'
 
 export function getStoredToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)

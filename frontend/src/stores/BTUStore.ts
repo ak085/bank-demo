@@ -11,7 +11,7 @@ import { type Finding, SEVERITY_ORDER } from '../types/fdd'
 
 export interface Branch {
   id: string
-  name: string         // "DBS Ang Mo Kio"
+  name: string         // "Branch 1"
   // Meter points
   supplyTempC: number  // chilled water supply to branch
   returnTempC: number  // return from branch AHU/FCU
@@ -62,7 +62,7 @@ export class BTUStore {
   branches: Branch[] = [
     // Normal ΔT, normal billing
     {
-      id: 'br-amk', name: 'DBS Ang Mo Kio',
+      id: 'br-1', name: 'Branch 1',
       supplyTempC: 7.0, returnTempC: 12.3, deltaT: 5.3, flowM3h: 0.68,
       btuKw: calcBtuKw(0.68, 7.0, 12.3),
       btuKwhToday: 42.1, afterHoursKwhToday: 1.2,
@@ -75,7 +75,7 @@ export class BTUStore {
       operatingHours: true,
     },
     {
-      id: 'br-bb', name: 'DBS Bukit Batok',
+      id: 'br-2', name: 'Branch 2',
       supplyTempC: 8.9, returnTempC: 13.5, deltaT: 4.6, flowM3h: 0.55,
       btuKw: calcBtuKw(0.55, 8.9, 13.5),
       btuKwhToday: 31.0, afterHoursKwhToday: 0.4,
@@ -89,7 +89,7 @@ export class BTUStore {
     },
     // Low ΔT — critical
     {
-      id: 'br-je', name: 'DBS Jurong East',
+      id: 'br-3', name: 'Branch 3',
       supplyTempC: 7.2, returnTempC: 10.3, deltaT: 3.1, flowM3h: 1.45,
       btuKw: calcBtuKw(1.45, 7.2, 10.3),
       btuKwhToday: 58.8, afterHoursKwhToday: 3.1,
@@ -103,7 +103,7 @@ export class BTUStore {
     },
     // High supply temp — plant issue
     {
-      id: 'br-tp', name: 'DBS Tampines',
+      id: 'br-4', name: 'Branch 4',
       supplyTempC: 9.2, returnTempC: 14.1, deltaT: 4.9, flowM3h: 0.72,
       btuKw: calcBtuKw(0.72, 9.2, 14.1),
       btuKwhToday: 53.2, afterHoursKwhToday: 2.8,
@@ -116,7 +116,7 @@ export class BTUStore {
       operatingHours: true,
     },
     {
-      id: 'br-bd', name: 'DBS Bedok',
+      id: 'br-5', name: 'Branch 5',
       supplyTempC: 6.8, returnTempC: 12.1, deltaT: 5.3, flowM3h: 0.52,
       btuKw: calcBtuKw(0.52, 6.8, 12.1),
       btuKwhToday: 29.5, afterHoursKwhToday: 0.3,
@@ -129,7 +129,7 @@ export class BTUStore {
       operatingHours: true,
     },
     {
-      id: 'br-wd', name: 'DBS Woodlands',
+      id: 'br-6', name: 'Branch 6',
       supplyTempC: 7.1, returnTempC: 12.6, deltaT: 5.5, flowM3h: 0.45,
       btuKw: calcBtuKw(0.45, 7.1, 12.6),
       btuKwhToday: 25.1, afterHoursKwhToday: 0.1,
@@ -299,11 +299,11 @@ export class BTUStore {
   private _tick() {
     for (const b of this.branches) {
       // Keep seeded anomalies stable for demo clarity
-      if (b.id === 'br-je') {
+      if (b.id === 'br-3') {
         b.supplyTempC = clamp(gauss(7.2, 0.05), 6.8, 7.6)
         b.returnTempC = clamp(gauss(10.3, 0.08), 9.8, 11.0)
         b.flowM3h     = clamp(gauss(1.45, 0.05), 1.2, 1.7)
-      } else if (b.id === 'br-bb' || b.id === 'br-tp') {
+      } else if (b.id === 'br-2' || b.id === 'br-4') {
         b.supplyTempC = clamp(gauss(b.supplyTempC, 0.08), 8.0, 10.0)
         b.returnTempC = clamp(gauss(b.returnTempC, 0.1),  12, 15)
         b.flowM3h     = clamp(gauss(b.flowM3h, 0.03), 0.4, 0.9)

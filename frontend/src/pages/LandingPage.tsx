@@ -46,7 +46,7 @@ const LandingPage: React.FC = observer(() => {
       iconBg: '#fff1b8', cardBg: '#fffbe6',
       title: 'Lighting Optimisation',
       subtitle: 'Lumani Smart Lighting — Dimming & Motion',
-      description: '6 zones monitored via Lumani API: On/Off, Dimming (0–100%), and Motion Count. FDD rules detect occupied rooms with lights off, dimmer driver faults, after-hours waste, and deviations from the DBS AMK energy schedule.',
+      description: '6 zones monitored via Lumani API: On/Off, Dimming (0–100%), and Motion Count. FDD rules detect occupied rooms with lights off, dimmer driver faults, after-hours waste, and deviations from the branch energy schedule.',
       tag: `${lighting.zones.length} Zones`,
       tagColor: 'gold' as const,
       findings: lighting.allFindings,
@@ -59,8 +59,8 @@ const LandingPage: React.FC = observer(() => {
       icon: <AreaChartOutlined style={{ fontSize: 36, color: '#096dd9' }} />,
       iconBg: '#bae0ff', cardBg: '#e6f4ff',
       title: 'BTU Metering',
-      subtitle: 'Chilled Water Billing — DBS Branches',
-      description: '6 DBS branch locations: Ang Mo Kio, Bukit Batok, Jurong East, Tampines, Bedok, Woodlands. Monitors ΔT efficiency, supply temperature, month-to-date billing deviation, and after-hours consumption.',
+      subtitle: 'Chilled Water Billing — Branches',
+      description: '6 branch locations. Monitors ΔT efficiency, supply temperature, month-to-date billing deviation, and after-hours consumption.',
       tag: `${btu.branches.length} Branches`,
       tagColor: 'blue' as const,
       findings: btu.allFindings,
@@ -76,10 +76,10 @@ const LandingPage: React.FC = observer(() => {
       <div style={{ marginBottom: 36, textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginBottom: 10 }}>
           <Tag color="red" style={{ fontSize: 11, letterSpacing: 1 }}>
-            DEMO — DBS Building Intelligence Platform
+            DEMO — Bank Building Intelligence Platform
           </Tag>
         </div>
-        <Title level={2} style={{ marginBottom: 4 }}>DBS Building Intelligence</Title>
+        <Title level={2} style={{ marginBottom: 4 }}>Bank Building Intelligence</Title>
         <Paragraph type="secondary" style={{ fontSize: 15 }}>
           Fault Detection & Diagnostics across three building systems. Select a system to review live findings.
         </Paragraph>

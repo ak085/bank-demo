@@ -2,7 +2,7 @@ import { makeAutoObservable, action } from 'mobx'
 import { type Finding, SEVERITY_ORDER } from '../types/fdd'
 
 // Lumani system points: On/Off (0,1) | Dimming (0–100) | Motion Count (0–100)
-// DBS AMK: 40× cylinder lights @ 15W each = 600W rated (0.6 kW)
+// Branch fit-out: 40× cylinder lights @ 15W each = 600W rated (0.6 kW)
 // Schedule targets (from ROI doc, corridors/common):
 //   08:00–12:00 = 100% | 12:00–16:00 = 30% | 17:00–23:00 = 35% | 23:00–07:00 = 40% (24hr areas)
 // Smart lighting baseline = 3 kWh/day (vs 14.4 kWh without); rate $0.26/kWh

@@ -10,13 +10,13 @@ import os
 from datetime import datetime, timedelta
 
 # ─── Config ──────────────────────────────────────────────────────────────────
-SECRET_KEY           = os.getenv("SECRET_KEY", "dbs-demo-8x4k9p2m-change-in-production")
+SECRET_KEY           = os.getenv("SECRET_KEY", "bank-demo-8x4k9p2m-change-in-production")
 ALGORITHM            = "HS256"
 TOKEN_EXPIRE_HOURS   = 12
 DB_PATH              = os.getenv("DB_PATH", "/data/users.db")
 
 # ─── App setup ───────────────────────────────────────────────────────────────
-app = FastAPI(title="DBS Demo Auth", docs_url=None, redoc_url=None)
+app = FastAPI(title="Bank Demo Auth", docs_url=None, redoc_url=None)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

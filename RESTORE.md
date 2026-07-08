@@ -42,5 +42,5 @@ docker compose up -d --build
 
 - Binds to `0.0.0.0:8029` — accessible on all interfaces (LAN + Tailscale)
 - All equipment data is simulated in MobX stores — no real BMS connection
-- Uses Ant Design (intentional — DBS platform integration target); do not replace with Tremor
+- Uses Ant Design (intentional — bank platform integration target); do not replace with Tremor
 - The `dbs-internal` Docker network is created automatically by compose
