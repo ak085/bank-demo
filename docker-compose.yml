@@ -1,31 +1,31 @@
 services:
-  dbs-demo:
+  bank-demo:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: dbs-demo
+    container_name: bank-demo
     restart: unless-stopped
     ports:
       - "8029:80"      # All interfaces — Tailscale (100.125.242.78) + LAN (10.230.93.50)
     depends_on:
-      - dbs-demo-backend
+      - bank-demo-backend
     networks:
       - aihvac-net
-      - dbs-internal
+      - bank-internal
 
-  dbs-demo-backend:
+  bank-demo-backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: dbs-demo-backend
+    container_name: bank-demo-backend
     restart: unless-stopped
     volumes:
       - ./data:/data
     networks:
-      - dbs-internal
+      - bank-internal
 
 networks:
   aihvac-net:
     external: true
-  dbs-internal:
+  bank-internal:
     driver: bridge

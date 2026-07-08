@@ -1,4 +1,4 @@
-# dbs-demo — AI Building Intelligence Demo
+# bank-demo — AI Building Intelligence Demo
 
 Generic bank building demo. Three pages showing AI optimisation for VRV, Lighting, and BTU meters, framed around a fictional bank's branches (no real bank branding).
 
@@ -41,18 +41,18 @@ To make data look realistic: stores generate history arrays at init time with a 
 
 ## Syncthing
 
-Drop client documents/screenshots/specs into `~/sync/dbs-demo/inbox/`. Exports (screenshots, PDFs) go to `~/sync/dbs-demo/exports/`.
+Drop client documents/screenshots/specs into `~/sync/bank-demo/inbox/`. Exports (screenshots, PDFs) go to `~/sync/bank-demo/exports/`.
 
 ## How to build & run
 
 ```bash
-cd /home/ak101/workbench/stacks/dbs-demo
+cd /home/ak101/bank-demo
 docker compose up -d --build
 ```
 
 Check logs:
 ```bash
-docker logs dbs-demo
+docker logs bank-demo
 ```
 
 ## Development (live reload)

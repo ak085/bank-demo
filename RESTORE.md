@@ -1,4 +1,4 @@
-# Restore: dbs-demo
+# Restore: bank-demo
 
 AI Building Intelligence demo — React + MobX + Ant Design SPA served by Nginx (port 8029),
 with a FastAPI auth backend (internal port 8000).
@@ -16,8 +16,8 @@ mkdir -p data
 ## Restore from Gitea
 
 ```bash
-git clone http://10.0.10.24:30008/ak101/dbs-demo.git
-cd dbs-demo
+git clone http://10.0.10.24:30008/ak101/bank-demo.git
+cd bank-demo
 
 docker compose up -d --build
 ```
@@ -43,4 +43,4 @@ docker compose up -d --build
 - Binds to `0.0.0.0:8029` — accessible on all interfaces (LAN + Tailscale)
 - All equipment data is simulated in MobX stores — no real BMS connection
 - Uses Ant Design (intentional — bank platform integration target); do not replace with Tremor
-- The `dbs-internal` Docker network is created automatically by compose
+- The `bank-internal` Docker network is created automatically by compose
