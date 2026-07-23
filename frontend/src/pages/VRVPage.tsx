@@ -17,7 +17,7 @@ import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
 import PageHeroImage from '../components/PageHeroImage'
 import type { VRVUnit } from '../stores/VRVStore'
-import heroImg from '../assets/hero/bank_vrv_optimization_page.jpg'
+import heroImg from '../assets/hero/bank_vrv_optimization_page.webp'
 import schematicImg from '../assets/hero/vrv_schematic.jpg'
 
 const { Title, Text } = Typography

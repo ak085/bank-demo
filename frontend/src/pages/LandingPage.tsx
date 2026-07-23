@@ -7,7 +7,7 @@ import { ThunderboltOutlined, BulbOutlined, AreaChartOutlined,
 import { useStore } from '../stores'
 import { overallHealth } from '../types/fdd'
 import PageHeroImage from '../components/PageHeroImage'
-import heroImg from '../assets/hero/bank_branches_dashboard_landing_page.jpg'
+import heroImg from '../assets/hero/bank_branches_dashboard_landing_page.webp'
 
 const { Title, Paragraph, Text } = Typography
 

@@ -16,7 +16,7 @@ import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
 import PageHeroImage from '../components/PageHeroImage'
 import type { Branch } from '../stores/BTUStore'
-import heroImg from '../assets/hero/bank_btu_chw_metering_page.jpg'
+import heroImg from '../assets/hero/bank_btu_chw_metering_page.webp'
 
 const { Title, Text } = Typography
 

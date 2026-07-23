@@ -16,7 +16,7 @@ import { useStore } from '../stores'
 import { FDDPanel } from '../components/FDDPanel'
 import PageHeroImage from '../components/PageHeroImage'
 import type { LightingZone } from '../stores/LightingStore'
-import heroImg from '../assets/hero/bank_lighting_control_page.jpg'
+import heroImg from '../assets/hero/bank_lighting_control_page.webp'
 
 const { Title, Text } = Typography
 

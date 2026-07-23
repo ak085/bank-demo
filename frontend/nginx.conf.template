@@ -21,12 +21,15 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    # Cache static assets aggressively
-    location ~* \.(js|css|png|jpg|gif|ico|svg|woff2?)$ {
+    # Cache static assets aggressively. Filenames are content-hashed by webpack
+    # (images included, via asset/resource), so immutable is safe.
+    location ~* \.(js|css|png|jpe?g|gif|ico|svg|webp|woff2?)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
 
     gzip on;
-    gzip_types text/plain application/javascript application/json text/css;
+    gzip_comp_level 6;
+    gzip_min_length 1024;
+    gzip_types application/javascript application/json text/css image/svg+xml application/wasm text/plain;
 }
